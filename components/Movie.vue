@@ -1,0 +1,100 @@
+<template>
+  <div>
+    <div class="movie-img">
+      <img :src="`https://image.tmdb.org/t/p/w500/${path}`" alt="" />
+      <p class="review">
+        {{ rating }}
+      </p>
+      <p class="overview">
+        {{ overview }}
+      </p>
+    </div>
+    <div class="info">
+      <p class="title">
+        {{ title.slice(0, 25) }}
+        <span v-if="title.length > 25"> ... </span>
+      </p>
+      <p class="release">
+        Released:
+        {{
+          new Date(date).toLocaleString('en-us', {
+            month: 'long',
+            day: 'numeric',
+            year: 'numeric',
+          })
+        }}
+      </p>
+      <NuxtLink
+        class="button button-light"
+        :to="{ name: 'movies-movieid', params: { id: 799876 } }"
+      >
+        Get More Info
+      </NuxtLink>
+    </div>
+  </div>
+</template>
+
+<script>
+export default {
+  name: 'Movie',
+  // eslint-disable-next-line vue/require-prop-types
+  props: ['movieparam', 'path', 'rating', 'overview', 'title', 'date'],
+}
+</script>
+
+<style lang="scss">
+.movie-img {
+  position: relative;
+  overflow: hidden;
+  &:hover {
+    .overview {
+      transform: translateY(0);
+    }
+  }
+  img {
+    display: block;
+    width: 100%;
+    height: 100%;
+  }
+  .review {
+    position: absolute;
+    top: 0;
+    left: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 40px;
+    height: 40px;
+    background-color: #c92502;
+    color: #fff;
+    border-radius: 0 0 16px 0;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1),
+      0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  }
+  .overview {
+    line-height: 1.5;
+    position: absolute;
+    bottom: 0;
+    background-color: rgba(201, 38, 2, 0.9);
+    padding: 12px;
+    color: #fff;
+    transform: translateY(100%);
+    transition: 0.3s ease-in-out all;
+  }
+}
+.info {
+  margin-top: auto;
+  .title {
+    margin-top: 8px;
+    color: #fff;
+    font-size: 20px;
+  }
+  .release {
+    margin-top: 8px;
+    color: #c9c9c9;
+  }
+  .button {
+    margin-top: 8px;
+  }
+}
+</style>
