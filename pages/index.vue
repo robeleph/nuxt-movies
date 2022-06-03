@@ -12,12 +12,7 @@
         <Movie
           v-for="movie in movies"
           :key="movie.id"
-          :path="movie.poster_path"
-          :rating="movie.vote_average"
-          :overview="movie.overview"
-          :title="movie.title"
-          :date="movie.release_date"
-          :movieparam="movie.id"
+          :movie="movie"
         />
       </div>
     </div>

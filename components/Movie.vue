@@ -1,35 +1,40 @@
 <template>
   <div>
     <div class="movie-img">
-      <img :src="`https://image.tmdb.org/t/p/w500/${path}`" alt="" />
+      <img
+        :src="`https://image.tmdb.org/t/p/w500/${movie.poster_path}`"
+        alt=""
+      />
       <p class="review">
-        {{ rating }}
+        {{ movie.rating }}
       </p>
       <p class="overview">
-        {{ overview }}
+        {{ movie.overview }}
       </p>
     </div>
     <div class="info">
       <p class="title">
-        {{ title.slice(0, 25) }}
-        <span v-if="title.length > 25"> ... </span>
+        {{ movie.title.slice(0, 25) }}
+        <span v-if="movie.title.length > 25"> ... </span>
       </p>
       <p class="release">
         Released:
         {{
-          new Date(date).toLocaleString('en-us', {
+          new Date(movie.release_date).toLocaleString('en-us', {
             month: 'long',
             day: 'numeric',
             year: 'numeric',
           })
         }}
       </p>
-      <NuxtLink
+      <button
+        @click.stop="
+          $router.push({ name: 'id-movie', params: { id: movie.id } })
+        "
         class="button button-light"
-        :to="{ name: 'movies-movieid', params: { id: 799876 } }"
       >
         Get More Info
-      </NuxtLink>
+      </button>
     </div>
   </div>
 </template>
@@ -38,7 +43,12 @@
 export default {
   name: 'Movie',
   // eslint-disable-next-line vue/require-prop-types
-  props: ['movieparam', 'path', 'rating', 'overview', 'title', 'date'],
+  props: {
+    movie: {
+      type: Object,
+      required: true,
+    },
+  },
 }
 </script>
 
